@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>loadly - accessible CSS spinners</title>
+<link rel="stylesheet" href="src/_shared.css">
+<link rel="stylesheet" href="src/orbit.css">
+<link rel="stylesheet" href="src/pulse.css">
+<link rel="stylesheet" href="src/bars.css">
+<style>
+  :root {
+    --ink: #111;
+    --dim: #6b7280;
+    --line: #e5e7eb;
+    --bg: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #f4f4f5; --dim: #a1a1aa; --line: #27272a; --bg: #09090b; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, sans-serif;
+    padding: 3rem 1.25rem 5rem;
+  }
+  main { max-width: 64rem; margin: 0 auto; }
+  h1 { font-size: 2.25rem; margin: 0 0 .5rem; letter-spacing: -.02em; }
+  .lede { color: var(--dim); margin: 0 0 2.5rem; max-width: 40rem; }
+  h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .12em;
+       color: var(--dim); margin: 3rem 0 1rem; }
+  .grid { display: grid; gap: 1px; background: var(--line);
+          border: 1px solid var(--line); border-radius: .75rem; overflow: hidden; }
+  @media (min-width: 640px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  .cell { background: var(--bg); padding: 2.5rem 1rem 1rem; }
+  .stage { display: grid; place-items: center; min-height: 5rem; margin-bottom: 1.5rem; }
+  .meta { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+  code { font: .85rem ui-monospace, monospace; }
+  button {
+    font: inherit; font-size: .78rem; padding: .3rem .6rem; cursor: pointer;
+    background: var(--ink); color: var(--bg); border: 0; border-radius: .35rem;
+  }
+  button:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+  .note { border-left: 3px solid var(--line); padding: .1rem 0 .1rem 1rem;
+          color: var(--dim); margin: 2.5rem 0 0; }
+  .sizes { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .swatches { display: flex; gap: 1rem; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<main>
+  <h1>loadly</h1>
+  <p class="lede">Three accessible CSS spinners. No JavaScript. Every spinner slows
+  under <code>prefers-reduced-motion</code> and falls back to borders in
+  <code>forced-colors</code> mode.</p>
+
+  <h2>Spinners</h2>
+  <div class="grid">
+    <div class="cell">
+      <div class="stage"><span class="ld-orbit" role="status"><span class="ld-label">Loading</span></span></div>
+      <div class="meta"><code>ld-orbit</code><button data-copy="ld-orbit">copy</button></div>
+    </div>
+    <div class="cell">
+      <div class="stage"><span class="ld-pulse" role="status"><span class="ld-label">Loading</span></span></div>
+      <div class="meta"><code>ld-pulse</code><button data-copy="ld-pulse">copy</button></div>
+    </div>
+    <div class="cell">
+      <div class="stage"><span class="ld-bars" role="status"><i></i><i></i><span class="ld-label">Loading</span></span></div>
+      <div class="meta"><code>ld-bars</code><button data-copy="ld-bars">copy</button></div>
+    </div>
+  </div>
+
+  <h2>Tokens</h2>
+  <p class="note">Size and weight scale cleanly because every spinner is drawn
+  from the same two tokens. Try it below.</p>
+  <div class="sizes">
+    <span class="ld-orbit" style="--ld-size:16px;--ld-weight:2px" role="img" aria-label="small"></span>
+    <span class="ld-orbit" role="img" aria-label="default"></span>
+    <span class="ld-orbit" style="--ld-size:64px;--ld-weight:5px" role="img" aria-label="large"></span>
+    <span class="ld-pulse" style="--ld-color:#2563eb" role="img" aria-label="coloured"></span>
+    <span class="ld-bars" style="--ld-color:#16a34a;--ld-speed:.7s" role="img" aria-label="fast"><i></i><i></i></span>
+  </div>
+
+  <h2>Speed</h2>
+  <div class="swatches">
+    <span class="ld-orbit" style="--ld-speed:2.4s" role="img" aria-label="slow"></span>
+    <span class="ld-orbit" role="img" aria-label="default speed"></span>
+    <span class="ld-orbit" style="--ld-speed:.6s" role="img" aria-label="fast"></span>
+  </div>
+
+  <p class="note">To check accessibility: turn on Reduce Motion in your OS and
+  reload - they should slow, not stop. On Windows, enable a high contrast theme
+  and the gradients become borders.</p>
+</main>
+
+<script>
+  for (const b of document.querySelectorAll('[data-copy]')) {
+    b.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(b.dataset.copy);
+      const was = b.textContent;
+      b.textContent = 'copied';
+      setTimeout(() => { b.textContent = was; }, 1200);
+    });
+  }
+</script>
+</body>
+</html>
