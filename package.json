@@ -8,26 +8,25 @@
   "sideEffects": ["*.css"],
   "files": ["src"],
   "exports": {
-    "./orbit.css": "./src/orbit.css",
-    "./pulse.css": "./src/pulse.css",
-    "./bars.css": "./src/bars.css",
     "./tokens.css": "./src/_shared.css",
+    "./orbit.css": "./src/orbit.css",
+    "./ring.css": "./src/ring.css",
+    "./pulse.css": "./src/pulse.css",
+    "./dots.css": "./src/dots.css",
+    "./bars.css": "./src/bars.css",
+    "./grid.css": "./src/grid.css",
+    "./square.css": "./src/square.css",
+    "./sweep.css": "./src/sweep.css",
     "./src/*": "./src/*"
   },
   "keywords": [
-    "css",
-    "spinner",
-    "loader",
-    "loading",
-    "accessibility",
-    "reduced-motion",
-    "css-only"
+    "css", "spinner", "spinners", "loader", "loaders", "loading",
+    "accessibility", "a11y", "reduced-motion", "forced-colors",
+    "css-only", "no-javascript"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/adam123gale-byte/loadly.git"
   },
-  "engines": {
-    "node": ">=18"
-  }
+  "engines": { "node": ">=18" }
 }
