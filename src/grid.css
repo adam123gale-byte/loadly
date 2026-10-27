@@ -1,0 +1,54 @@
+/* loadly - grid
+ * (c) 2026 adam123gale-byte
+ *
+ * Nine cells fading in a wave from the top-left corner. Uses CSS grid with a
+ * gap, so the cell count stays fixed while the spacing scales from --ld-weight.
+ * Cells are ::before/::after plus one child row; the rest are box-shadow.
+ */
+
+.ld-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(var(--ld-weight) * 1.2);
+  width: var(--ld-size);
+  height: var(--ld-size);
+  --ld-d: calc(var(--ld-speed) / 9);
+}
+
+.ld-grid::before,
+.ld-grid::after,
+.ld-grid > i {
+  content: "";
+  display: block;
+  grid-column: span 3;
+  background: currentColor;
+  animation: ld-grid var(--ld-speed) var(--ld-easing) infinite;
+}
+
+/* Row one and two are pseudo-elements split into thirds by box-shadow offsets. */
+.ld-grid::before {
+  box-shadow:
+    calc(var(--ld-size) / 3) 0 currentColor,
+    calc(var(--ld-size) / 1.5) 0 currentColor;
+}
+
+.ld-grid::after {
+  animation-delay: calc(var(--ld-d) * 3);
+  box-shadow:
+    calc(var(--ld-size) / 3) 0 currentColor,
+    calc(var(--ld-size) / 1.5) 0 currentColor;
+}
+
+.ld-grid > i {
+  animation-delay: calc(var(--ld-d) * 6);
+  box-shadow:
+    calc(var(--ld-size) / 3) 0 currentColor,
+    calc(var(--ld-size) / 1.5) 0 currentColor;
+}
+
+@keyframes ld-grid {
+  0%, 70%, 100% { opacity: 0.25; }
+  35%           { opacity: 1;    }
+}
+
+.ld-grid > i:nth-child(n+2) { display: none; }
