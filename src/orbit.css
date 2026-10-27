@@ -1,45 +1,29 @@
 
-/* loadly - orbit
+/* loadly - ring
  * (c) 2026 loadly
  *
- * A gradient arc chasing its own tail: a conic gradient masked to a ring, so
- * the weight is a real stroke rather than a scaled border. The trace follows
- * --ld-color, so it inherits text colour for free.
+ * A plain bordered ring with a rotating gap. Deliberately the simplest spinner
+ * here: no gradients, no masks, so it survives the widest range of
+ * environments and needs no forced-colours fallback.
  */
 
-.ld-orbit {
+.ld-ring {
   width: var(--ld-size);
   height: var(--ld-size);
+  border: var(--ld-weight) solid color-mix(in srgb, currentColor 22%, transparent);
+  border-top-color: currentColor;
   border-radius: 50%;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0 25%,
-    var(--ld-color) 75% 100%
-  );
-  -webkit-mask: radial-gradient(
-    farthest-side,
-    transparent calc(100% - var(--ld-weight)),
-    #000 calc(100% - var(--ld-weight))
-  );
-  mask: radial-gradient(
-    farthest-side,
-    transparent calc(100% - var(--ld-weight)),
-    #000 calc(100% - var(--ld-weight))
-  );
-  animation: ld-orbit var(--ld-speed) linear infinite;
+  animation: ld-ring var(--ld-speed) linear infinite;
 }
 
-@keyframes ld-orbit {
+@keyframes ld-ring {
   to { transform: rotate(1turn); }
 }
 
-/* Forced colours cannot read a conic gradient reliably: fall back to a border. */
-@media (forced-colors: active) {
-  .ld-orbit {
-    background: none;
-    border: var(--ld-weight) solid CanvasText;
-    border-top-color: transparent;
-    border-radius: 50%;
-    forced-color-adjust: none;
+/* color-mix is recent; without it the faint track would vanish entirely. */
+@supports not (color: color-mix(in srgb, red 50%, transparent)) {
+  .ld-ring {
+    border-color: transparent;
+    border-top-color: currentColor;
   }
 }
