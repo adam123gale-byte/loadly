@@ -1,9 +1,10 @@
+
 /* loadly - sweep
  * (c) 2026 adam123gale-byte
  *
- * A wide bar with a highlight travelling across it. Intended for top-of-page
- * and inline progress, where a round spinner would be the wrong shape.
- * Width is set by --ld-width, defaulting to a sensible 160px.
+ * A wide bar with a highlight travelling across it. For top-of-page and inline
+ * progress, where a round spinner is the wrong shape.
+ * Width comes from --ld-width, defaulting to 160px.
  */
 
 .ld-sweep {
@@ -32,16 +33,36 @@
   100% { transform: translateX(250%); }
 }
 
+/* No color-mix: outline the track instead of filling it. */
 @supports not (color: color-mix(in srgb, red 50%, transparent)) {
-  .ld-sweep { background: transparent; box-shadow: inset 0 0 0 var(--ld-weight) currentColor; }
+  .ld-sweep {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px currentColor;
+  }
 }
 
 /* Reduced motion: keep the highlight, drop the travel. */
 @media (prefers-reduced-motion: reduce) {
-  .ld-sweep::after { animation: ld-sweep-fade var(--ld-speed) ease-in-out infinite; width: 100%; }
+  .ld-sweep::after {
+    width: 100%;
+    animation: ld-sweep-fade var(--ld-speed) ease-in-out infinite;
+  }
 }
 
 @keyframes ld-sweep-fade {
-  0%, 100% { opacity: 0.35; transform: none; }
-  50%      { opacity: 1;    transform: none; }
+  0%, 100% { opacity: 0.35; transform: translateX(0); }
+  50%      { opacity: 1;    transform: translateX(0); }
+}
+
+/* Both track and highlight are painted with background. */
+@media (forced-colors: active) {
+  .ld-sweep {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px CanvasText;
+    forced-color-adjust: none;
+  }
+  .ld-sweep::after {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
 }
