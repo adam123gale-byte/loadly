@@ -1,0 +1,49 @@
+/* loadly - dots
+ * (c) 2026 adam123gale-byte
+ *
+ * Three dots on a hop, driven by a single keyframe and staggered delays.
+ * Gap and dot size both derive from --ld-weight, so the proportions hold at
+ * any size. One element in the DOM; dots are pseudo-elements plus a child.
+ */
+
+.ld-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--ld-weight) * 1.4);
+  height: var(--ld-size);
+}
+
+.ld-dots::before,
+.ld-dots::after,
+.ld-dots > i {
+  content: "";
+  display: block;
+  width: calc(var(--ld-weight) * 2);
+  height: calc(var(--ld-weight) * 2);
+  border-radius: 50%;
+  background: currentColor;
+  animation: ld-dots var(--ld-speed) var(--ld-easing) infinite;
+}
+
+.ld-dots::before { animation-delay: calc(var(--ld-speed) / -6); }
+.ld-dots > i     { animation-delay: calc(var(--ld-speed) / -12); }
+.ld-dots::after  { animation-delay: 0s; }
+
+@keyframes ld-dots {
+  0%, 60%, 100% { transform: translateY(0);    opacity: 0.55; }
+  30%           { transform: translateY(-40%); opacity: 1;    }
+}
+
+/* Motion is decorative here; opacity carries it when transforms are unwelcome. */
+@media (prefers-reduced-motion: reduce) {
+  .ld-dots::before,
+  .ld-dots::after,
+  .ld-dots > i { animation-name: ld-dots-fade; }
+}
+
+@keyframes ld-dots-fade {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1;   }
+}
+
+.ld-dots > i:nth-child(n+2) { display: none; }
