@@ -1,0 +1,34 @@
+/* loadly - square
+ * (c) 2026 adam123gale-byte
+ *
+ * A square rolling on one corner for a quarter turn, then pausing. Reads as
+ * mechanical rather than fluid, which suits terse UIs. Rotation happens around
+ * the bottom corner so it never drifts out of its box.
+ */
+
+.ld-square {
+  width: calc(var(--ld-size) * 0.55);
+  height: calc(var(--ld-size) * 0.55);
+  margin: calc(var(--ld-size) * 0.225);
+  border: var(--ld-weight) solid currentColor;
+  border-radius: calc(var(--ld-weight) / 2);
+  transform-origin: bottom right;
+  animation: ld-square calc(var(--ld-speed) * 1.5) var(--ld-easing) infinite;
+}
+
+@keyframes ld-square {
+  0%   { transform: rotate(0turn)   scale(1);    }
+  25%  { transform: rotate(0.25turn) scale(0.85); }
+  50%  { transform: rotate(0.25turn) scale(1);    }
+  100% { transform: rotate(1turn)   scale(1);    }
+}
+
+/* Border-based, so forced colours need no help here. */
+@media (prefers-reduced-motion: reduce) {
+  .ld-square { animation-name: ld-square-fade; }
+}
+
+@keyframes ld-square-fade {
+  0%, 100% { opacity: 0.4; transform: rotate(0turn); }
+  50%      { opacity: 1;   transform: rotate(0.25turn); }
+}
