@@ -1,6 +1,6 @@
 
 /* loadly - sweep
- * (c) 2026 adam123gale-byte
+ * (c) 2026 loadly
  *
  * A wide bar with a highlight travelling across it. For top-of-page and inline
  * progress, where a round spinner is the wrong shape.
@@ -54,7 +54,8 @@
   50%      { opacity: 1;    transform: translateX(0); }
 }
 
-/* Both track and highlight are painted with background. */
+/* Track and highlight are both painted with background, which forced colours
+   strips. Outline the track, and pin the highlight to CanvasText. */
 @media (forced-colors: active) {
   .ld-sweep {
     background: transparent;
@@ -62,7 +63,7 @@
     forced-color-adjust: none;
   }
   .ld-sweep::after {
-    background-color: CanvasText;
+    background: CanvasText;
     forced-color-adjust: none;
   }
 }
