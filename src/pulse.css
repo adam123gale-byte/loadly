@@ -1,20 +1,15 @@
+
 /* loadly - pulse
- * (c) 2026 adam123gale-byte
+ * (c) 2026 loadly
  *
- * Three rings expanding from a shared centre, staggered evenly. Two offset
- * pseudo-elements plus the base, so it is one element in the DOM, not three.
+ * Three rings expanding from a shared centre on staggered delays. Two
+ * pseudo-elements plus the base element, so one DOM node in total.
  */
 
 .ld-pulse {
   position: relative;
   width: var(--ld-size);
   height: var(--ld-size);
-}
-
-.ld-pulse::before,
-.ld-pulse::after,
-.ld-pulse {
-  --ld-pulse-scale: 1;
 }
 
 .ld-pulse::before,
@@ -39,8 +34,24 @@
   100% { transform: scale(1);    opacity: 0; }
 }
 
-/* Under forced colours only the border survives anyway, so keep it crisp. */
+/* Expansion is the point, so fade instead of freezing. */
+@media (prefers-reduced-motion: reduce) {
+  .ld-pulse::before,
+  .ld-pulse::after { animation-name: ld-pulse-fade; }
+  .ld-pulse::before { animation-delay: 0s; }
+  .ld-pulse::after  { animation-delay: calc(var(--ld-speed) / -2); }
+}
+
+@keyframes ld-pulse-fade {
+  0%, 100% { transform: scale(1); opacity: 0.15; }
+  50%      { transform: scale(1); opacity: 1;    }
+}
+
+/* Border-based, so forced colours already works; keep the ink sane anyway. */
 @media (forced-colors: active) {
   .ld-pulse::before,
-  .ld-pulse::after { border-color: CanvasText; }
+  .ld-pulse::after {
+    border-color: CanvasText;
+    forced-color-adjust: none;
+  }
 }
