@@ -1,0 +1,33 @@
+{
+  "name": "loadly",
+  "version": "0.1.0",
+  "description": "Small, accessible CSS loading spinners. Reduced-motion and forced-colors aware.",
+  "license": "MIT",
+  "author": "adam123gale-byte",
+  "type": "module",
+  "sideEffects": ["*.css"],
+  "files": ["src"],
+  "exports": {
+    "./orbit.css": "./src/orbit.css",
+    "./pulse.css": "./src/pulse.css",
+    "./bars.css": "./src/bars.css",
+    "./tokens.css": "./src/_shared.css",
+    "./src/*": "./src/*"
+  },
+  "keywords": [
+    "css",
+    "spinner",
+    "loader",
+    "loading",
+    "accessibility",
+    "reduced-motion",
+    "css-only"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adam123gale-byte/loadly.git"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
