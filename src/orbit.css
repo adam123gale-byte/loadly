@@ -1,0 +1,43 @@
+/* loadly - orbit
+ * (c) 2026 adam123gale-byte
+ *
+ * A gradient arc chasing its own tail. Uses a conic gradient masked to a ring,
+ * so the weight is a real stroke rather than a scaled border. The trace colour
+ * follows --ld-color, so it inherits text colour for free.
+ */
+
+.ld-orbit {
+  width: var(--ld-size);
+  height: var(--ld-size);
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 25%,
+    var(--ld-color) 75% 100%
+  );
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - var(--ld-weight)),
+    #000 calc(100% - var(--ld-weight))
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - var(--ld-weight)),
+    #000 calc(100% - var(--ld-weight))
+  );
+  animation: ld-orbit var(--ld-speed) linear infinite;
+}
+
+@keyframes ld-orbit {
+  to { transform: rotate(1turn); }
+}
+
+/* Forced colours cannot see a conic gradient reliably: fall back to a border. */
+@media (forced-colors: active) {
+  .ld-orbit {
+    background: none;
+    border: var(--ld-weight) solid;
+    border-top-color: transparent;
+    border-radius: 50%;
+  }
+}
