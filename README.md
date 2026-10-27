@@ -5,7 +5,7 @@ Nine CSS loading spinners built for the two things most spinner libraries ignore
 
 No JavaScript. No dependencies. No build step. ~1KB per spinner.
 
-Written from scratch by [adam123gale-byte](https://github.com/adam123gale-byte). Prior art credited in [CREDITS.md](CREDITS.md).
+Written from scratch. Prior art credited in [CREDITS.md](CREDITS.md).
 
 **[Live demo](index.html)** - open `index.html` in any browser.
 
@@ -113,4 +113,4 @@ See [CREDITS.md](CREDITS.md). Conceptual debt to SpinKit by Tobias Ahlin.
 
 ## Licence
 
-MIT, Copyright (c) 2026 adam123gale-byte.
+MIT, Copyright (c) 2026 loadly.
