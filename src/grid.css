@@ -4,9 +4,9 @@
  *
  * Nine cells fading in a wave from the top-left corner.
  *
- * Three rows, three cells per row. Each row paints its cells with three
- * background layers rather than box-shadow, because box-shadow is not clipped
- * by background-clip and the columns would merge into solid bars.
+ * Three rows, three cells per row, painted as three background layers per row.
+ * Box-shadow is avoided because it is not affected by background-clip, so the
+ * columns would merge into solid bars.
  */
 
 .ld-grid {
@@ -16,6 +16,7 @@
   height: var(--ld-size);
   --ld-d: calc(var(--ld-speed) / 9);
   --ld-cell: 28%;
+  --ld-ink: currentColor;
 }
 
 .ld-grid::before,
@@ -24,9 +25,9 @@
   content: "";
   display: block;
   background-image:
-    linear-gradient(currentColor, currentColor),
-    linear-gradient(currentColor, currentColor),
-    linear-gradient(currentColor, currentColor);
+    linear-gradient(var(--ld-ink), var(--ld-ink)),
+    linear-gradient(var(--ld-ink), var(--ld-ink)),
+    linear-gradient(var(--ld-ink), var(--ld-ink));
   background-size: var(--ld-cell) 100%;
   background-position: 0% 50%, 50% 50%, 100% 50%;
   background-repeat: no-repeat;
@@ -43,16 +44,11 @@
 
 .ld-grid > i:nth-child(n+2) { display: none; }
 
-/* Cells are painted with background, which forced colours strips.
+/* Cells are painted with a gradient, which forced colours strips.
    CanvasText is the one colour guaranteed to survive there. */
 @media (forced-colors: active) {
+  .ld-grid { --ld-ink: CanvasText; }
   .ld-grid::before,
   .ld-grid::after,
-  .ld-grid > i {
-    background-image:
-      linear-gradient(CanvasText, CanvasText),
-      linear-gradient(CanvasText, CanvasText),
-      linear-gradient(CanvasText, CanvasText);
-    forced-color-adjust: none;
-  }
+  .ld-grid > i { forced-color-adjust: none; }
 }
