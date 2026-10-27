@@ -1,9 +1,9 @@
 /* loadly - ring
- * (c) 2026 adam123gale-byte
+ * (c) 2026 loadly
  *
  * A plain bordered ring with a rotating gap. Deliberately the simplest spinner
- * here: no gradients, no masks, so it is the one that survives the widest range
- * of environments, including forced colours with no fallback needed.
+ * here: no gradients, no masks, so it survives the widest range of
+ * environments and needs no forced-colours fallback.
  */
 
 .ld-ring {
@@ -19,7 +19,12 @@
   to { transform: rotate(1turn); }
 }
 
-/* color-mix is recent; without it the faint track would vanish. */
+/* color-mix is recent; without it the faint track would vanish entirely. */
 @supports not (color: color-mix(in srgb, red 50%, transparent)) {
-  .ld-ring { border-color: transparent; border-top-color: currentColor; }
+  .ld-ring {
+    border-color: transparent;
+    border-top-color: currentColor;
+  }
 }
+
+/* Border-based, so forced colours works already. */
