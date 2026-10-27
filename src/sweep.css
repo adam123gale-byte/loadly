@@ -1,0 +1,47 @@
+/* loadly - sweep
+ * (c) 2026 adam123gale-byte
+ *
+ * A wide bar with a highlight travelling across it. Intended for top-of-page
+ * and inline progress, where a round spinner would be the wrong shape.
+ * Width is set by --ld-width, defaulting to a sensible 160px.
+ */
+
+.ld-sweep {
+  --ld-sweep-width: var(--ld-width, 160px);
+  position: relative;
+  display: block;
+  width: var(--ld-sweep-width);
+  height: var(--ld-weight);
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.ld-sweep::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  border-radius: inherit;
+  background: currentColor;
+  animation: ld-sweep var(--ld-speed) var(--ld-easing) infinite;
+}
+
+@keyframes ld-sweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
+@supports not (color: color-mix(in srgb, red 50%, transparent)) {
+  .ld-sweep { background: transparent; box-shadow: inset 0 0 0 var(--ld-weight) currentColor; }
+}
+
+/* Reduced motion: keep the highlight, drop the travel. */
+@media (prefers-reduced-motion: reduce) {
+  .ld-sweep::after { animation: ld-sweep-fade var(--ld-speed) ease-in-out infinite; width: 100%; }
+}
+
+@keyframes ld-sweep-fade {
+  0%, 100% { opacity: 0.35; transform: none; }
+  50%      { opacity: 1;    transform: none; }
+}
