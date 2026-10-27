@@ -1,23 +1,21 @@
 
 /* loadly - grid
- * (c) 2026 adam123gale-byte
+ * (c) 2026 loadly
  *
  * Nine cells fading in a wave from the top-left corner.
  *
- * The gap is painted rather than laid out: no grid gap, and each row is inset
- * with padding + background-clip so the visible bar is narrower than its cell.
- * That keeps the box-shadow offsets (exactly a third of the box) landing on the
- * column centres instead of drifting.
+ * Three rows, three cells per row. Each row paints its cells with three
+ * background layers rather than box-shadow, because box-shadow is not clipped
+ * by background-clip and the columns would merge into solid bars.
  */
 
 .ld-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   width: var(--ld-size);
   height: var(--ld-size);
   --ld-d: calc(var(--ld-speed) / 9);
-  --ld-in: calc(var(--ld-weight) * 0.6);
+  --ld-cell: 28%;
 }
 
 .ld-grid::before,
@@ -25,36 +23,18 @@
 .ld-grid > i {
   content: "";
   display: block;
-  grid-column: span 3;
-  margin: var(--ld-in) 0;
-  padding: 0 var(--ld-in);
-  box-sizing: border-box;
-  background: currentColor;
-  background-clip: content-box;
+  background-image:
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor);
+  background-size: var(--ld-cell) 100%;
+  background-position: 0% 50%, 50% 50%, 100% 50%;
+  background-repeat: no-repeat;
   animation: ld-grid var(--ld-speed) var(--ld-easing) infinite;
 }
 
-/* Each row is one element; its two neighbours are painted by box-shadow at
-   exactly one third and two thirds of the box width. */
-.ld-grid::before {
-  box-shadow:
-    calc(var(--ld-size) / 3) 0 currentColor,
-    calc(var(--ld-size) / 1.5) 0 currentColor;
-}
-
-.ld-grid::after {
-  animation-delay: calc(var(--ld-d) * 3);
-  box-shadow:
-    calc(var(--ld-size) / 3) 0 currentColor,
-    calc(var(--ld-size) / 1.5) 0 currentColor;
-}
-
-.ld-grid > i {
-  animation-delay: calc(var(--ld-d) * 6);
-  box-shadow:
-    calc(var(--ld-size) / 3) 0 currentColor,
-    calc(var(--ld-size) / 1.5) 0 currentColor;
-}
+.ld-grid::after { animation-delay: calc(var(--ld-d) * 3); }
+.ld-grid > i     { animation-delay: calc(var(--ld-d) * 6); }
 
 @keyframes ld-grid {
   0%, 70%, 100% { opacity: 0.25; }
@@ -63,13 +43,16 @@
 
 .ld-grid > i:nth-child(n+2) { display: none; }
 
-/* These cells are painted with background, which forced colours strips.
-   CanvasText is the one colour guaranteed to win there. */
+/* Cells are painted with background, which forced colours strips.
+   CanvasText is the one colour guaranteed to survive there. */
 @media (forced-colors: active) {
   .ld-grid::before,
   .ld-grid::after,
   .ld-grid > i {
-    background-color: CanvasText;
+    background-image:
+      linear-gradient(CanvasText, CanvasText),
+      linear-gradient(CanvasText, CanvasText),
+      linear-gradient(CanvasText, CanvasText);
     forced-color-adjust: none;
   }
 }
