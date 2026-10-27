@@ -1,9 +1,10 @@
+
 /* loadly - dots
  * (c) 2026 adam123gale-byte
  *
- * Three dots on a hop, driven by a single keyframe and staggered delays.
- * Gap and dot size both derive from --ld-weight, so the proportions hold at
- * any size. One element in the DOM; dots are pseudo-elements plus a child.
+ * Three dots on a hop, driven by one keyframe and staggered delays. Gap and dot
+ * size both derive from --ld-weight so the proportions hold at any size.
+ * One element in the DOM; dots are two pseudo-elements plus a single child.
  */
 
 .ld-dots {
@@ -34,7 +35,7 @@
   30%           { transform: translateY(-40%); opacity: 1;    }
 }
 
-/* Motion is decorative here; opacity carries it when transforms are unwelcome. */
+/* Movement alone carries this spinner, so swap in a fade rather than stop it. */
 @media (prefers-reduced-motion: reduce) {
   .ld-dots::before,
   .ld-dots::after,
@@ -47,3 +48,13 @@
 }
 
 .ld-dots > i:nth-child(n+2) { display: none; }
+
+/* Dots are painted with background, which forced colours strips. */
+@media (forced-colors: active) {
+  .ld-dots::before,
+  .ld-dots::after,
+  .ld-dots > i {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
+}
