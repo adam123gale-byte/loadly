@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Small, accessible CSS loading spinners. Reduced-motion and forced-colors aware.",
   "license": "MIT",
-  "author": "adam123gale-byte",
+  "author": "loadly",
   "type": "module",
   "sideEffects": ["*.css"],
   "files": ["src"],
