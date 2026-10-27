@@ -1,55 +1,67 @@
+
 # loadly
 
-Small, accessible CSS loading spinners. No JavaScript, no dependencies, no build step required.
+Nine CSS loading spinners built for the two things most spinner libraries ignore: **reduced motion** and **high contrast mode**.
+
+No JavaScript. No dependencies. No build step. ~1KB per spinner.
 
 Written from scratch by [adam123gale-byte](https://github.com/adam123gale-byte). Prior art credited in [CREDITS.md](CREDITS.md).
 
-**Status:** early. Three spinners, more coming.
+**[Live demo](index.html)** - open `index.html` in any browser.
 
 ## Why another spinner library
 
-Most spinner libraries predate two things that now matter: reduced motion and high-contrast mode. Loadly is built around them rather than retrofitted.
+Most spinner libraries were written before accessibility became a procurement requirement. They animate regardless of the user's OS settings, disappear in Windows High Contrast, and ship a monolith so you pay for twenty spinners to use one.
+
+Loadly is the opposite shape.
 
 | | typical spinner lib | loadly |
 |---|---|---|
-| Respects `prefers-reduced-motion` | rarely | yes, slows rather than stops |
-| Survives Windows High Contrast | no | yes, falls back to borders |
-| Screen reader label | manual | built in |
+| Respects `prefers-reduced-motion` | rarely | every spinner slows or swaps to a fade |
+| Survives forced-colours mode | no | gradients become borders |
+| Screen-reader label | manual | built in |
 | Ships only what you import | no | one file per spinner |
-| Speed, weight, colour, gap as tokens | no | all four |
+| Size, weight, colour, speed, gap as tokens | no | all five |
+| JavaScript | often | none |
 | Licence | often unclear | MIT |
 
 ## Install
 
-Copy one file. There is no bundler to configure and no JS to load.
+Copy one file. Nothing to configure.
 
 ```
-src/orbit.css   src/pulse.css   src/bars.css
+src/ring.css   src/orbit.css   src/pulse.css   src/dots.css   src/bars.css
+src/grid.css   src/square.css  src/sweep.css
 ```
 
-Each spinner is self-contained apart from the shared tokens. Either:
-
-**A. Import the tokens once**, anywhere in your CSS:
+Import the tokens once, then the spinner you want:
 
 ```css
-@import "loadly/src/_shared.css";
-@import "loadly/src/orbit.css";
+@import "loadly/tokens.css";
+@import "loadly/ring.css";
 ```
 
-**B. Or paste tokens and one spinner** into your own stylesheet, and delete what you don't use.
+Or with a bundler:
+
+```js
+import "loadly/tokens.css";
+import "loadly/ring.css";
+```
+
+Or paste the tokens and one spinner straight into your own stylesheet.
 
 ## Use
 
 ```html
-<span class="ld-orbit" role="status">
+<span class="ld-ring" role="status">
   <span class="ld-label">Loading</span>
 </span>
 ```
 
-Tune it on the element or on `:root`:
+Tune on the element or on `:root`:
 
 ```css
-.ld-orbit {
+.ld-ring {
   --ld-size: 24px;
   --ld-color: rebeccapurple;
   --ld-weight: 2px;
@@ -57,15 +69,20 @@ Tune it on the element or on `:root`:
 }
 ```
 
-Centre it with `ld-center`. Override `--ld-easing` to change the feel.
+Centre with `ld-center`.
 
 ## Spinners
 
-| class | shape |
-|---|---|
-| `ld-orbit` | gradient arc on a masked ring |
-| `ld-pulse` | three staggered expanding rings, one element |
-| `ld-bars` | four bars on a scaleY wave |
+| class | shape | notes |
+|---|---|---|
+| `ld-ring` | bordered ring | simplest, widest support |
+| `ld-orbit` | masked gradient arc | needs `conic-gradient` |
+| `ld-pulse` | three expanding rings | one element |
+| `ld-dots` | hop, three dots | one element |
+| `ld-bars` | scaleY wave, four bars | inline |
+| `ld-grid` | nine-cell fade wave | one element + `<i>` |
+| `ld-square` | rolling square | mechanical, border-based |
+| `ld-sweep` | travelling highlight | for inline and top-of-page |
 
 ## Tokens
 
@@ -76,18 +93,19 @@ Centre it with `ld-center`. Override `--ld-easing` to change the feel.
 | `--ld-weight` | `3px` | stroke thickness |
 | `--ld-speed` | `1.2s` | one cycle |
 | `--ld-easing` | ease | timing function |
-| `--ld-gap` | `0.18em` | spacing in `ld-bars` |
+| `--ld-gap` | `0.18em` | spacing |
+| `--ld-width` | `160px` | width, `ld-sweep` only |
 
 ## Accessibility
 
-- `prefers-reduced-motion: reduce` halves the speed instead of freezing. A stopped spinner reads as a broken page.
-- `forced-colors: active` swaps gradients for borders and pins colour to `CanvasText`.
-- `.ld-label` is a visually hidden text node. Pair it with `role="status"` so the change is announced once.
-- Animations use only `transform` and `opacity`, so they stay on the compositor.
+- `prefers-reduced-motion: reduce` slows every spinner and swaps movement for opacity where movement is the whole point. A frozen spinner reads as a broken page; a slow one still reads as alive.
+- `forced-colors: active` replaces gradients with borders and pins colour to `CanvasText`.
+- `.ld-label` is a visually hidden text node. Pair it with `role="status"` and the change is announced once.
+- Animations use only `transform` and `opacity`, so they stay on the compositor and never trigger layout.
 
 ## Browser support
 
-Evergreen Chrome, Firefox, Safari and Edge. Needs custom properties and `conic-gradient`; both are baseline. No IE.
+Evergreen Chrome, Firefox, Safari and Edge. Custom properties and `conic-gradient` are baseline. No IE. `color-mix` has a `@supports` fallback.
 
 ## Credits
 
