@@ -5,9 +5,9 @@ Nine CSS loading spinners built for the two things most spinner libraries ignore
 
 No JavaScript. No dependencies. No build step. ~1KB per spinner.
 
-Written from scratch. Prior art credited in [CREDITS.md](CREDITS.md).
+**[See all nine →](https://adam123gale-byte.github.io/loadly/)**
 
-**[Live demo](index.html)** - open `index.html` in any browser.
+Written from scratch. Prior art credited in [CREDITS.md](CREDITS.md).
 
 ## Why another spinner library
 
