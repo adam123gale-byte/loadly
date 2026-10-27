@@ -1,8 +1,8 @@
 
 /* loadly - bars
- * (c) 2026 adam123gale-byte
+ * (c) 2026 loadly
  *
- * Four bars on a scaleY wave. Gap is a token, so the group widens without
+ * Four bars on a scaleY wave. The gap is a token, so the group widens without
  * touching the keyframes. Flex, no floats.
  */
 
@@ -33,6 +33,24 @@
 @keyframes ld-bars {
   0%, 100% { transform: scaleY(0.35); }
   50%      { transform: scaleY(1);    }
+}
+
+/* Squash is the point, so fade instead of freezing. */
+@media (prefers-reduced-motion: reduce) {
+  .ld-bars::before,
+  .ld-bars::after,
+  .ld-bars > i {
+    animation-name: ld-bars-fade;
+    transform: scaleY(1);
+  }
+  .ld-bars::before { animation-delay: 0s; }
+  .ld-bars > i     { animation-delay: calc(var(--ld-speed) / -3); }
+  .ld-bars::after  { animation-delay: calc(var(--ld-speed) / -1.5); }
+}
+
+@keyframes ld-bars-fade {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 1;    }
 }
 
 /* Bars are painted with background, which forced colours strips. */
