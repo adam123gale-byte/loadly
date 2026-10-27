@@ -1,7 +1,8 @@
+
 /* loadly - shared tokens and base rules
- * (c) 2026 adam123gale-byte
+ * (c) 2026 loadly
  *
- * Every spinner imports these tokens. Override on :root or on the spinner
+ * Every spinner reads these tokens. Override on :root or on the spinner
  * itself; nothing here is !important.
  */
 
@@ -21,9 +22,7 @@
 
 /* Forced colours: system ink, system background. */
 @media (forced-colors: active) {
-  :root {
-    --ld-color: CanvasText;
-  }
+  :root { --ld-color: CanvasText; }
 }
 
 .ld-center { margin: auto; }
