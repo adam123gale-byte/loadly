@@ -1,8 +1,9 @@
+
 /* loadly - bars
  * (c) 2026 adam123gale-byte
  *
- * Four bars on a scaleY wave. Gap is a token, so the whole thing widens
- * without touching the keyframes. Built on flex, no floats.
+ * Four bars on a scaleY wave. Gap is a token, so the group widens without
+ * touching the keyframes. Flex, no floats.
  */
 
 .ld-bars {
@@ -25,15 +26,24 @@
   animation: ld-bars var(--ld-speed) var(--ld-easing) infinite;
 }
 
-.ld-bars::before            { animation-delay: calc(var(--ld-speed) / -4); }
-.ld-bars > i                { animation-delay: calc(var(--ld-speed) / -8); }
-.ld-bars > i + i            { animation-delay: 0s; }
-.ld-bars::after             { animation-delay: calc(var(--ld-speed) / -8); }
+.ld-bars::before { animation-delay: calc(var(--ld-speed) / -4); }
+.ld-bars > i     { animation-delay: calc(var(--ld-speed) / -8); }
+.ld-bars::after  { animation-delay: 0s; }
 
 @keyframes ld-bars {
   0%, 100% { transform: scaleY(0.35); }
   50%      { transform: scaleY(1);    }
 }
 
-/* A single <i> child is enough; the ::before/::after give four bars total. */
-.ld-bars > i:nth-child(n+3) { display: none; }
+/* Bars are painted with background, which forced colours strips. */
+@media (forced-colors: active) {
+  .ld-bars::before,
+  .ld-bars::after,
+  .ld-bars > i {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
+}
+
+/* One <i> child is enough; the pseudo-elements give four bars in total. */
+.ld-bars > i:nth-child(n+2) { display: none; }
