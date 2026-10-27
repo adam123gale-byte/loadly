@@ -1,60 +1,69 @@
+
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>loadly - accessible CSS spinners</title>
+<meta name="description" content="Nine CSS loading spinners that respect reduced motion and survive high contrast mode. No JavaScript.">
 <link rel="stylesheet" href="src/_shared.css">
 <link rel="stylesheet" href="src/orbit.css">
+<link rel="stylesheet" href="src/ring.css">
 <link rel="stylesheet" href="src/pulse.css">
+<link rel="stylesheet" href="src/dots.css">
 <link rel="stylesheet" href="src/bars.css">
+<link rel="stylesheet" href="src/grid.css">
+<link rel="stylesheet" href="src/square.css">
+<link rel="stylesheet" href="src/sweep.css">
 <style>
-  :root {
-    --ink: #111;
-    --dim: #6b7280;
-    --line: #e5e7eb;
-    --bg: #fff;
-  }
+  :root { --ink:#111; --dim:#6b7280; --line:#e5e7eb; --bg:#fff; --mark:#2563eb; }
   @media (prefers-color-scheme: dark) {
-    :root { --ink: #f4f4f5; --dim: #a1a1aa; --line: #27272a; --bg: #09090b; }
+    :root { --ink:#f4f4f5; --dim:#a1a1aa; --line:#27272a; --bg:#09090b; }
   }
   * { box-sizing: border-box; }
   body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, sans-serif;
-    padding: 3rem 1.25rem 5rem;
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.6 ui-sans-serif,system-ui,-apple-system,sans-serif;
+    padding:3rem 1.25rem 6rem;
   }
-  main { max-width: 64rem; margin: 0 auto; }
-  h1 { font-size: 2.25rem; margin: 0 0 .5rem; letter-spacing: -.02em; }
-  .lede { color: var(--dim); margin: 0 0 2.5rem; max-width: 40rem; }
-  h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .12em;
-       color: var(--dim); margin: 3rem 0 1rem; }
-  .grid { display: grid; gap: 1px; background: var(--line);
-          border: 1px solid var(--line); border-radius: .75rem; overflow: hidden; }
-  @media (min-width: 640px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-  .cell { background: var(--bg); padding: 2.5rem 1rem 1rem; }
-  .stage { display: grid; place-items: center; min-height: 5rem; margin-bottom: 1.5rem; }
-  .meta { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
-  code { font: .85rem ui-monospace, monospace; }
+  main { max-width:66rem; margin:0 auto; }
+  h1 { font-size:2.5rem; margin:0 0 .6rem; letter-spacing:-.03em; }
+  .lede { color:var(--dim); margin:0 0 1rem; max-width:44rem; font-size:1.05rem; }
+  .badges { display:flex; gap:.5rem; flex-wrap:wrap; margin:0 0 2.5rem; }
+  .badge { font-size:.72rem; text-transform:uppercase; letter-spacing:.1em;
+           border:1px solid var(--line); border-radius:999px; padding:.25rem .7rem;
+           color:var(--dim); }
+  h2 { font-size:.78rem; text-transform:uppercase; letter-spacing:.14em;
+       color:var(--dim); margin:3.5rem 0 1rem; }
+  .grid { display:grid; gap:1px; background:var(--line);
+          border:1px solid var(--line); border-radius:.9rem; overflow:hidden; }
+  @media (min-width:640px) { .grid { grid-template-columns:repeat(3,1fr); } }
+  .cell { background:var(--bg); padding:2.5rem 1rem 1rem; }
+  .stage { display:grid; place-items:center; min-height:5rem; margin-bottom:1.25rem; }
+  .meta { display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
+  code { font:.82rem ui-monospace,monospace; }
   button {
-    font: inherit; font-size: .78rem; padding: .3rem .6rem; cursor: pointer;
-    background: var(--ink); color: var(--bg); border: 0; border-radius: .35rem;
+    font:inherit; font-size:.75rem; padding:.3rem .65rem; cursor:pointer;
+    background:var(--ink); color:var(--bg); border:0; border-radius:.35rem;
   }
-  button:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
-  .note { border-left: 3px solid var(--line); padding: .1rem 0 .1rem 1rem;
-          color: var(--dim); margin: 2.5rem 0 0; }
-  .sizes { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
-  .swatches { display: flex; gap: 1rem; flex-wrap: wrap; }
+  button:focus-visible { outline:2px solid var(--mark); outline-offset:2px; }
+  .note { border-left:3px solid var(--line); padding:.15rem 0 .15rem 1rem;
+          color:var(--dim); margin:2.5rem 0 0; max-width:44rem; }
+  .row { display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
+  a { color:var(--mark); }
 </style>
 </head>
 <body>
 <main>
   <h1>loadly</h1>
-  <p class="lede">Three accessible CSS spinners. No JavaScript. Every spinner slows
-  under <code>prefers-reduced-motion</code> and falls back to borders in
-  <code>forced-colors</code> mode.</p>
+  <p class="lede">Nine CSS loading spinners built for the two things most spinner
+  libraries ignore: reduced motion and high contrast mode.</p>
+  <div class="badges">
+    <span class="badge">No JavaScript</span>
+    <span class="badge">No dependencies</span>
+    <span class="badge">~1KB per spinner</span>
+    <span class="badge">MIT</span>
+  </div>
 
   <h2>Spinners</h2>
   <div class="grid">
@@ -63,42 +72,65 @@
       <div class="meta"><code>ld-orbit</code><button data-copy="ld-orbit">copy</button></div>
     </div>
     <div class="cell">
+      <div class="stage"><span class="ld-ring" role="status"><span class="ld-label">Loading</span></span></div>
+      <div class="meta"><code>ld-ring</code><button data-copy="ld-ring">copy</button></div>
+    </div>
+    <div class="cell">
       <div class="stage"><span class="ld-pulse" role="status"><span class="ld-label">Loading</span></span></div>
       <div class="meta"><code>ld-pulse</code><button data-copy="ld-pulse">copy</button></div>
+    </div>
+    <div class="cell">
+      <div class="stage"><span class="ld-dots" role="status"><i></i><span class="ld-label">Loading</span></span></div>
+      <div class="meta"><code>ld-dots</code><button data-copy="ld-dots">copy</button></div>
     </div>
     <div class="cell">
       <div class="stage"><span class="ld-bars" role="status"><i></i><i></i><span class="ld-label">Loading</span></span></div>
       <div class="meta"><code>ld-bars</code><button data-copy="ld-bars">copy</button></div>
     </div>
+    <div class="cell">
+      <div class="stage"><span class="ld-grid" role="status"><i></i><span class="ld-label">Loading</span></span></div>
+      <div class="meta"><code>ld-grid</code><button data-copy="ld-grid">copy</button></div>
+    </div>
+    <div class="cell">
+      <div class="stage"><span class="ld-square" role="status"><span class="ld-label">Loading</span></span></div>
+      <div class="meta"><code>ld-square</code><button data-copy="ld-square">copy</button></div>
+    </div>
+    <div class="cell">
+      <div class="stage" style="align-items:center"><span class="ld-sweep" role="status" style="--ld-width:100%"><span class="ld-label">Loading</span></span></div>
+      <div class="meta"><code>ld-sweep</code><button data-copy="ld-sweep">copy</button></div>
+    </div>
+    <div class="cell">
+      <div class="stage"><span class="ld-ring" style="--ld-size:18px;--ld-weight:2px;--ld-speed:.7s" role="img" aria-label="compact"></span></div>
+      <div class="meta"><code>compact</code><button data-copy="ld-ring">copy</button></div>
+    </div>
   </div>
 
   <h2>Tokens</h2>
-  <p class="note">Size and weight scale cleanly because every spinner is drawn
-  from the same two tokens. Try it below.</p>
-  <div class="sizes">
-    <span class="ld-orbit" style="--ld-size:16px;--ld-weight:2px" role="img" aria-label="small"></span>
-    <span class="ld-orbit" role="img" aria-label="default"></span>
-    <span class="ld-orbit" style="--ld-size:64px;--ld-weight:5px" role="img" aria-label="large"></span>
-    <span class="ld-pulse" style="--ld-color:#2563eb" role="img" aria-label="coloured"></span>
-    <span class="ld-bars" style="--ld-color:#16a34a;--ld-speed:.7s" role="img" aria-label="fast"><i></i><i></i></span>
+  <p class="note">Size, weight, colour and speed are all tokens. Nothing is hard-coded,
+  so the same spinner works at 16px in a button or 64px on an empty state.</p>
+  <div class="row">
+    <span class="ld-ring" style="--ld-size:16px;--ld-weight:2px" role="img" aria-label="small"></span>
+    <span class="ld-ring" role="img" aria-label="default"></span>
+    <span class="ld-ring" style="--ld-size:64px;--ld-weight:5px" role="img" aria-label="large"></span>
+    <span class="ld-orbit" style="--ld-color:#2563eb" role="img" aria-label="coloured"></span>
+    <span class="ld-dots" style="--ld-color:#16a34a;--ld-speed:.7s" role="img" aria-label="fast"><i></i></span>
   </div>
 
-  <h2>Speed</h2>
-  <div class="swatches">
-    <span class="ld-orbit" style="--ld-speed:2.4s" role="img" aria-label="slow"></span>
-    <span class="ld-orbit" role="img" aria-label="default speed"></span>
-    <span class="ld-orbit" style="--ld-speed:.6s" role="img" aria-label="fast"></span>
-  </div>
+  <h2>Accessibility</h2>
+  <p class="note">Turn on <strong>Reduce Motion</strong> in your OS and reload: every
+  spinner slows or exchanges motion for a fade rather than freezing. Turn on a
+  <strong>high contrast</strong> theme and gradient fills become borders.
+  Each example carries <code>role="status"</code> and a visually hidden label.</p>
 
-  <p class="note">To check accessibility: turn on Reduce Motion in your OS and
-  reload - they should slow, not stop. On Windows, enable a high contrast theme
-  and the gradients become borders.</p>
+  <p class="note">Credit: prior art to
+  <a href="https://github.com/tobiasahlin/SpinKit">SpinKit</a> by Tobias Ahlin.
+  Loadly is written from scratch.</p>
 </main>
 
 <script>
   for (const b of document.querySelectorAll('[data-copy]')) {
     b.addEventListener('click', async () => {
-      await navigator.clipboard.writeText(b.dataset.copy);
+      try { await navigator.clipboard.writeText(b.dataset.copy); } catch {}
       const was = b.textContent;
       b.textContent = 'copied';
       setTimeout(() => { b.textContent = was; }, 1200);
