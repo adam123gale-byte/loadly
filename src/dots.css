@@ -1,6 +1,6 @@
 
 /* loadly - dots
- * (c) 2026 adam123gale-byte
+ * (c) 2026 loadly
  *
  * Three dots on a hop, driven by one keyframe and staggered delays. Gap and dot
  * size both derive from --ld-weight so the proportions hold at any size.
@@ -39,7 +39,10 @@
 @media (prefers-reduced-motion: reduce) {
   .ld-dots::before,
   .ld-dots::after,
-  .ld-dots > i { animation-name: ld-dots-fade; }
+  .ld-dots > i {
+    animation-name: ld-dots-fade;
+    transform: none;
+  }
 }
 
 @keyframes ld-dots-fade {
