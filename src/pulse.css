@@ -1,0 +1,46 @@
+/* loadly - pulse
+ * (c) 2026 adam123gale-byte
+ *
+ * Three rings expanding from a shared centre, staggered evenly. Two offset
+ * pseudo-elements plus the base, so it is one element in the DOM, not three.
+ */
+
+.ld-pulse {
+  position: relative;
+  width: var(--ld-size);
+  height: var(--ld-size);
+}
+
+.ld-pulse::before,
+.ld-pulse::after,
+.ld-pulse {
+  --ld-pulse-scale: 1;
+}
+
+.ld-pulse::before,
+.ld-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: var(--ld-weight) solid var(--ld-color);
+  border-radius: 50%;
+  animation: ld-pulse var(--ld-speed) var(--ld-easing) infinite;
+  animation-delay: calc(var(--ld-speed) / -3);
+  opacity: 0;
+}
+
+.ld-pulse::after {
+  animation-delay: calc(var(--ld-speed) / -6);
+}
+
+@keyframes ld-pulse {
+  0%   { transform: scale(0.15); opacity: 1; }
+  80%  { transform: scale(1);    opacity: 0; }
+  100% { transform: scale(1);    opacity: 0; }
+}
+
+/* Under forced colours only the border survives anyway, so keep it crisp. */
+@media (forced-colors: active) {
+  .ld-pulse::before,
+  .ld-pulse::after { border-color: CanvasText; }
+}
