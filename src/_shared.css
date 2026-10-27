@@ -1,0 +1,48 @@
+/* loadly - shared tokens and base rules
+ * (c) 2026 adam123gale-byte
+ *
+ * Every spinner imports these tokens. Override on :root or on the spinner
+ * itself; nothing here is !important.
+ */
+
+:root {
+  --ld-size: 40px;
+  --ld-color: currentColor;
+  --ld-weight: 3px;
+  --ld-speed: 1.2s;
+  --ld-easing: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --ld-gap: 0.18em;
+}
+
+/* Reduced motion: slow, never stop. A frozen spinner looks broken. */
+@media (prefers-reduced-motion: reduce) {
+  :root { --ld-speed: 2.4s; }
+}
+
+/* Forced colours: system ink, system background. */
+@media (forced-colors: active) {
+  :root {
+    --ld-color: CanvasText;
+  }
+}
+
+.ld-center { margin: auto; }
+
+/* Every spinner is transformable and screen-reader friendly by default. */
+[class^="ld-"], [class*=" ld-"] {
+  display: inline-block;
+  vertical-align: middle;
+  transform: translateZ(0);
+  box-sizing: border-box;
+  color: var(--ld-color);
+}
+
+/* Text label for assistive tech, visible to nobody else. */
+.ld-label {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
